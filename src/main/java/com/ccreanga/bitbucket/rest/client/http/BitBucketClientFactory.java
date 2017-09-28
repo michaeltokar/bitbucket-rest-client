@@ -17,20 +17,21 @@
 
 package com.ccreanga.bitbucket.rest.client.http;
 
+import com.ccreanga.bitbucket.rest.client.BuildStatusClient;
 import com.ccreanga.bitbucket.rest.client.ProjectClient;
 import com.ccreanga.bitbucket.rest.client.SshClient;
-
-import java.net.URL;
 
 public class BitBucketClientFactory {
 
     private ProjectClient projectClient;
+    private BuildStatusClient buildStatusClient;
     private SshClient sshClient;
     private BitBucketHttpExecutor bitBucketHttpExecutor;
 
     public BitBucketClientFactory(String baseUrl, BitBucketCredentials credentials) {
         bitBucketHttpExecutor = new BitBucketHttpExecutor(baseUrl, credentials);
         projectClient = new ProjectClientRest(bitBucketHttpExecutor);
+        buildStatusClient = new BuildStatusClientRest(bitBucketHttpExecutor);
         sshClient = new SshClientRest(bitBucketHttpExecutor);
     }
 
@@ -40,6 +41,10 @@ public class BitBucketClientFactory {
 
     public ProjectClient getProjectClient() {
         return projectClient;
+    }
+
+    public BuildStatusClient getBuildStatusClient() {
+        return buildStatusClient;
     }
 
     public SshClient getSshClient() {

@@ -29,6 +29,8 @@ import com.ccreanga.bitbucket.rest.client.model.pull.activity.PullRequestActivit
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestBranch;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestChange;
 import com.ccreanga.bitbucket.rest.client.model.pull.PullRequestParticipant;
+
+import java.util.Map;
 import java.util.function.Function;
 import com.google.gson.JsonElement;
 
@@ -40,6 +42,10 @@ public class Parsers {
 
     public static <T> Function<JsonElement, List<T>> listParser(Function<JsonElement, T> elementParser) {
         return new ListParser<>(elementParser);
+    }
+
+    public static Function<JsonElement, Map<String, BuildStatsSummary>> buildStatsParser() {
+        return BUILD_STATS_PARSER;
     }
 
     public static Function<JsonElement, Branch> branchParser() {
@@ -142,6 +148,8 @@ public class Parsers {
     public static Function<JsonElement,Task> taskParser(){return  TASK_PARSER;}
     public static Function<JsonElement,TaskOperations> taskOperationsParser(){return  TASK_OPERATIONS_PARSER;}
     public static Function<JsonElement,PermittedOperations> permittedOperationsParser(){return  PERMITTED_OPERATIONS_PARSER;}
+
+    private static BuildStatsParser BUILD_STATS_PARSER = new BuildStatsParser();
 
     private static BranchParser BRANCH_PARSER = new BranchParser();
     private static ProjectParser PROJECT_PARSER = new ProjectParser();
